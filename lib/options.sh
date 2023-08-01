@@ -9,7 +9,7 @@ process_option() {
     'B')
       bin/create_boot_disk;;
     'b')
-      bin/apply_basic_settings;;
+      bin/install_basics;;
     't')
       bin/install_dev_tools;;
     'hf')
@@ -22,38 +22,36 @@ process_option() {
       bin/install_applications;;
     'x')
       bin/install_extensions;;
-    'df')
-      bin/install_dotfiles;;
-    'np')
-      bin/install_node_packages;;
-    'rg')
-      bin/install_ruby_gems;;
-    'rc')
-      bin/install_rust_crates;;
     'd')
-      bin/apply_default_settings;;
-    'cs')
-      bin/configure_software;;
+      bin/install_defaults;;
+    's')
+      bin/install_shell;;
+    'r')
+      bin/restore_backup;;
     'i')
       caffeinate_machine
-      bin/apply_basic_settings
+      bin/install_basics
       bin/install_dev_tools
       bin/install_homebrew_formulas
       bin/install_homebrew_casks
       bin/install_app_store
       bin/install_applications
       bin/install_extensions
-      bin/install_dotfiles
+      bin/install_defaults
+      bin/install_shell
+      bin/restore_backup
+      clean_work_path;;
+    'np')
+      bin/install_node_packages;;
+    'rg')
+      bin/install_ruby_gems;;
+    'rc')
+      bin/install_rust_crates;;
+    'l')
       bin/install_node_packages
       bin/install_ruby_gems
-      bin/install_rust_crates
-      bin/apply_default_settings
-      bin/configure_software
-      clean_work_path;;
-    'R')
-      caffeinate_machine
-      bin/restore_backup;;
-    'c')
+      bin/install_rust_crates;;
+   'c')
       verify_homebrew_formulas
       verify_homebrew_casks
       verify_app_store_applications
@@ -64,14 +62,6 @@ process_option() {
       verify_rust_crates;;
     'C')
       caffeinate_machine;;
-    'ua')
-      uninstall_application;;
-    'ux')
-      uninstall_extension;;
-    'ra')
-      reinstall_application;;
-    'rx')
-      reinstall_extension;;
     'w')
       clean_work_path;;
     'q');;

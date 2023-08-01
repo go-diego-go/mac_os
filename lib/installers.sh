@@ -11,8 +11,16 @@ download_file() {
 
   printf "%s\n" "Downloading $1..."
   clean_work_path
-  mkdir $MAC_OS_WORK_PATH
-  curl --header "$http_header" --location --retry 3 --retry-delay 5 --fail --silent --show-error "$url" >> "$MAC_OS_WORK_PATH/$file_name"
+  mkdir "$MAC_OS_WORK_PATH"
+
+  curl --header "$http_header" \
+       --location \
+       --retry 3 \
+       --retry-delay 5 \
+       --fail \
+       --silent \
+       --show-error \
+       "$url" >> "$MAC_OS_WORK_PATH/$file_name"
 }
 export -f download_file
 
@@ -139,6 +147,8 @@ export -f install_git_project
 install_homebrew() {
   if ! command -v brew > /dev/null; then
     /bin/bash -c "$(curl --location --fail --silent --show-error https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    echo "eval \"($(get_homebrew_bin_root)/brew shellenv)\"" > $HOME/.zprofile
+    eval "$($(get_homebrew_bin_root)/brew shellenv)"
   fi
 }
 export -f install_homebrew
@@ -191,8 +201,8 @@ export -f install_program
 # Installs Node.
 # Parameters: None.
 install_node() {
-  if ! command -v fnm > /dev/null; then
-    $(get_homebrew_bin_root)/fnm install --lts
+  if [[ ! -x "$(command -v node)" ]]; then
+    "$(get_homebrew_bin_root)/fnm" install --latest
   fi
 }
 export -f install_node
@@ -203,9 +213,11 @@ install_ruby() {
   local version="$(cat $HOME/.ruby-version | tr -d '\n')"
 
   if [[ ! -x "$(command -v ruby)" && -n $(ruby --version | grep --quiet "$version") ]]; then
-    $(get_homebrew_bin_root)/frum install "$version"
-    $(get_homebrew_bin_root)/frum local "$version"
-    gem update --system && gem update
+    "$(get_homebrew_bin_root)"/frum install "$version" \
+                                            --with-openssl-dir="$(brew --prefix openssl)" \
+                                            --enable-shared \
+                                            --disable-silent-rules
+    "$(get_homebrew_bin_root)"/frum local "$version"
   fi
 }
 export -f install_ruby

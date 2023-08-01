@@ -4,20 +4,17 @@
 
 = macOS
 
-[link=https://circleci.com/gh/bkuhlmann/mac_os]
-image::https://circleci.com/gh/bkuhlmann/mac_os.svg?style=svg[Circle CI Status]
-
 Shell scripts for automated macOS machine setup.
 
 This project is a framework for automating the setup of a macOS machine. In order to illustrate the
 potential of what this project can do, please see the companion
-link:https://www.alchemists.io/projects/mac_os-config[macOS Config] project for details. The _macOS
+link:https://alchemists.io/projects/mac_os-config[macOS Config] project for details. The _macOS
 Config_ project is an opinionated configuration which meets the needs of my development environment
 but is also meant to serve as an example and guide for building your own personalized setup. Here is
 how the two projects are meant to be used:
 
 * *macOS* (this project) - The foundational framework for building custom macOS machine setups.
-* *link:https://www.alchemists.io/projects/mac_os-config[macOS Configuration]* - The layer on top of
+* *link:https://alchemists.io/projects/mac_os-config[macOS Configuration]* - The layer on top of
   this _macOS_ project which defines a custom machine implementation. The project is meant to be
   forked for as many custom machine setups as needed.
 
@@ -43,12 +40,12 @@ toc::[]
 
 == Screencast
 
-[link=https://www.alchemists.io/screencasts/mac_os]
-image::https://www.alchemists.io/images/screencasts/mac_os/cover.svg[Screencast,600,240,role=focal_point]
+[link=https://alchemists.io/screencasts/mac_os]
+image::https://alchemists.io/images/screencasts/mac_os/cover.svg[Screencast,600,240,role=focal_point]
 
 == Requirements
 
-. link:https://www.apple.com/macos/big-sur[macOS Big Sur]
+. link:https://www.apple.com/macos/ventura[macOS Ventura]
 . link:https://developer.apple.com/xcode[Xcode]
 
 == Setup
@@ -59,7 +56,7 @@ To install, run:
 ----
 git clone https://github.com/bkuhlmann/mac_os.git
 cd mac_os
-git checkout 13.0.0
+git checkout 16.0.4
 ----
 
 == Usage
@@ -175,28 +172,39 @@ All executable scripts can be found in the `bin` folder:
 * `bin/run` (required): The main script and interface for macOS setup.
 
 The `lib` folder provides the base framework for installing, re-installing, and uninstalling
-software. Everything provided via the link:https://www.alchemists.io/projects/mac_os-config[macOS
+software. Everything provided via the link:https://alchemists.io/projects/mac_os-config[macOS
 Config] project is built upon the functions found in the `lib` folder. See the
-link:https://www.alchemists.io/projects/mac_os-config[macOS Config] project for further details.
+link:https://alchemists.io/projects/mac_os-config[macOS Config] project for further details.
 
 * `lib/settings.sh`: Defines global settings for software applications, extensions, etc.
 
-== Troubleshooting
+=== Troubleshooting
 
-* When using link:https://pi-hole.net[Pi-hole], you might need to temporarily disable prior to
-  upgrading as you might experience various errors with Apple not being able to detect an internet
-  connection which prevents the installer from working.
-* When using the boot disk and the installer fails in some catestrophic manner, reboot the machine
-  into recovery mode -- `POWER` (Silicon) or `COMMAND + R` (Intel) buttons -- to download and
-  install the last operating system used. Alternatively, you can also use `COMMAND + OPTION + R`
-  (Intel) to attemp to download the latest operating system.
-* When using the boot disk, you might experience a situation where you see a black screen with a
-  white circle and diagonal line running through it. This means macOS lost or can’t find the boot
-  disk for some reason. To correct this, shut down and boot up the system again while holding down
-  the `OPTION + COMMAND + R + P` (Intel) keys simultaneously. You might want to wait for the system
-  boot sound to happen a few times before releasing the keys. This will clear the system NVRAM/PRAM.
-  At this point you can shut down and restart the system following the boot disk instructions (the
-  boot disk will be recognized now).
+* *Pi-hole*: When using link:https://pi-hole.net[Pi-hole], you might need to temporarily disable
+  prior to upgrading as you might experience various errors with Apple not being able to detect an
+  internet connection which prevents the installer from working.
+* *Recovery Mode*: When using the boot disk and the installer fails in some catastrophic manner,
+  reboot the machine into recovery mode -- pass:[<kbd>POWER</kbd>] (Silicon) or
+  pass:[<kbd>COMMAND</kbd>] + pass:[<kbd>r</kbd>] (Intel) buttons -- to download and install the
+  last operating system used. Alternatively, you can also use pass:[<kbd>COMMAND</kbd>] +
+  pass:[<kbd>OPTION</kbd>] + pass:[<kbd>r</kbd>] (Intel) to attempt to download the latest operating
+  system.
+* *NVRAM/PRAM Reset*: When using the boot disk, you might experience a situation where you see a
+  black screen with a white circle and diagonal line running through it. This means macOS lost or
+  can't find the boot disk for some reason. To correct this, shut down and boot up the system again
+  while holding down pass:[<kbd>OPTION</kbd>] + pass:[<kbd>COMMAND</kbd>] + pass:[<kbd>r</kbd>] +
+  pass:[<kbd>p</kbd>] (Intel) keys simultaneously. You might want to wait for the system boot sound
+  to happen a few times before releasing the keys. This will clear the system NVRAM/PRAM. At this
+  point you can shut down and restart the system following the boot disk instructions (the boot disk
+  will be recognized now).
+* *System Management Controller (SMC) Reset*: Sometimes it can help to reset the SMC to improve
+  system speed. To fix, follow these steps:
+** Shut down your Mac.
+** Hold down pass:[<kbd>CONTROL</kbd>] + pass:[<kbd>OPTION</kbd>] on the left side of the keyboard
+   and pass:[<kbd>SHIFT</kbd>] on the right side of the keyboard.
+** After seven seconds, hold down the Power button as well.
+** Release all keys after another seven seconds.
+** Turn on your Mac.
 
 == Development
 
@@ -208,31 +216,18 @@ git clone https://github.com/bkuhlmann/mac_os.git
 cd mac_os
 ----
 
-== Versioning
+== link:https://alchemists.io/policies/license[License]
 
-Read link:https://semver.org[Semantic Versioning] for details. Briefly, it means:
+== link:https://alchemists.io/policies/security[Security]
 
-* Major (X.y.z) - Incremented for any backwards incompatible public API changes.
-* Minor (x.Y.z) - Incremented for new, backwards compatible, public API enhancements/fixes.
-* Patch (x.y.Z) - Incremented for small, backwards compatible, bug fixes.
+== link:https://alchemists.io/policies/code_of_conduct[Code of Conduct]
 
-== Code of Conduct
+== link:https://alchemists.io/policies/contributions[Contributions]
 
-Please note that this project is released with a link:CODE_OF_CONDUCT.adoc[CODE OF CONDUCT]. By
-participating in this project you agree to abide by its terms.
+== link:https://alchemists.io/projects/mac_os/versions[Versions]
 
-== Contributions
-
-Read link:CONTRIBUTING.adoc[CONTRIBUTING] for details.
-
-== License
-
-Read link:LICENSE.adoc[LICENSE] for details.
-
-== History
-
-Read link:CHANGES.adoc[CHANGES] for details.
+== link:https://alchemists.io/community[Community]
 
 == Credits
 
-Engineered by link:https://www.alchemists.io/team/brooke_kuhlmann[Brooke Kuhlmann].
+Engineered by link:https://alchemists.io/team/brooke_kuhlmann[Brooke Kuhlmann].
