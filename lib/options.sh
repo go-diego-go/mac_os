@@ -29,7 +29,6 @@ process_option() {
     'r')
       bin/restore_backup;;
     'i')
-      caffeinate_machine
       bin/install_basics
       bin/install_dev_tools
       bin/install_homebrew_formulas
@@ -39,7 +38,6 @@ process_option() {
       bin/install_extensions
       bin/install_defaults
       bin/install_shell
-      bin/restore_backup
       clean_work_path;;
     'np')
       bin/install_node_packages;;
